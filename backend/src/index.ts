@@ -15,7 +15,11 @@ import timelineRouter from './routes/timeline'
 import uploadRouter from './routes/upload'
 
 const app = express()
-app.use(cors())
+const corsOrigin = process.env.CORS_ORIGIN
+app.use(cors({
+  origin: corsOrigin ? corsOrigin.split(',').map(s => s.trim()) : true,
+  credentials: true,
+}))
 app.use(express.json())
 
 // 静态托管上传文件

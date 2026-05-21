@@ -1,7 +1,9 @@
 import axios from 'axios'
 import type { Project, Task, Milestone, Storyboard, StoryboardComment, Asset, AssetVersion, TeamMember, PromptTemplate, TimelineEvent } from '../types'
 
-const api = axios.create({ baseURL: '/api' })
+const API_BASE = import.meta.env.VITE_API_URL || '/api'
+
+const api = axios.create({ baseURL: API_BASE })
 
 export const projectsApi = {
   list: () => api.get<Project[]>('/projects').then(r => r.data),
@@ -60,7 +62,7 @@ export const uploadApi = {
       const formData = new FormData()
       formData.append('file', file)
       const xhr = new XMLHttpRequest()
-      xhr.open('POST', '/api/upload')
+      xhr.open('POST', `${API_BASE}/upload`)
       xhr.upload.onprogress = e => {
         if (e.lengthComputable && onProgress) onProgress(Math.round((e.loaded / e.total) * 100))
       }

@@ -9,9 +9,15 @@ export default function App() {
   const [activeId, setActiveId] = useState<string | null>(null)
 
   const loadProjects = async () => {
-    const list = await projectsApi.list()
-    setProjects(list as unknown as Project[])
-    if (list.length > 0 && !activeId) setActiveId(list[0].id)
+    try {
+      const list = await projectsApi.list()
+      const items = Array.isArray(list) ? list : []
+      setProjects(items as Project[])
+      if (items.length > 0 && !activeId) setActiveId(items[0].id)
+    } catch (err) {
+      console.error('加载项目失败，请检查后端 API 是否已启动:', err)
+      setProjects([])
+    }
   }
 
   useEffect(() => { loadProjects() }, [])
