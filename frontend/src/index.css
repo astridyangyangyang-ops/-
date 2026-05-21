@@ -1,0 +1,71 @@
+@import "tailwindcss";
+
+/* ── 马卡龙色系 + 森贝儿风格全局样式 ── */
+
+:root {
+  --sakura: #FFB7C5;
+  --sakura-light: #FFE4EC;
+  --sakura-pale: #FFF5F8;
+  --mint: #A8E6CF;
+  --mint-light: #D4F5EA;
+  --mint-pale: #F0FBF6;
+  --lavender: #C4AAFF;
+  --lavender-light: #E2D9FF;
+  --lavender-pale: #F3EFFF;
+  --peach: #FFCBA4;
+  --peach-light: #FFE8D5;
+  --peach-pale: #FFF5EE;
+  --sky: #93C5FD;
+  --butter: #FDE68A;
+  --cream: #FFF8F5;
+  --bg: #FEF6FB;
+}
+
+body {
+  background-color: var(--bg);
+  font-family: 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', system-ui, -apple-system, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ── 滚动条 ── */
+::-webkit-scrollbar { width: 5px; height: 5px; }
+::-webkit-scrollbar-track { background: #fff5f8; border-radius: 10px; }
+::-webkit-scrollbar-thumb { background: #ffb7c5; border-radius: 10px; }
+::-webkit-scrollbar-thumb:hover { background: #f9a8d4; }
+
+/* ── 蕾丝装饰边 ── */
+.lace-bottom {
+  position: relative;
+  padding-bottom: 14px;
+}
+.lace-bottom::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 14px;
+  background-image: radial-gradient(ellipse 10px 14px at 10px 14px, #fff5f8 100%, transparent 100%);
+  background-size: 20px 14px;
+  background-repeat: repeat-x;
+  background-position: 0 0;
+}
+
+/* ── 波点底纹 ── */
+.polka {
+  background-image: radial-gradient(circle, rgba(255,183,197,0.25) 1.5px, transparent 1.5px);
+  background-size: 18px 18px;
+}
+
+/* ── 卡片软阴影 ── */
+.card-soft {
+  box-shadow: 0 2px 12px rgba(255, 183, 197, 0.18), 0 1px 3px rgba(255, 183, 197, 0.12);
+}
+
+/* ── 输入框焦点发光 ── */
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(255, 183, 197, 0.35);
+}

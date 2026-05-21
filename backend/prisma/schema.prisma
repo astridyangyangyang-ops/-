@@ -1,0 +1,155 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Project {
+  id          String    @id @default(uuid())
+  name        String
+  description String?
+  type        String    @default("movie")
+  phase       String    @default("development")
+  genre       String?
+  director    String?
+  producer    String?
+  startDate   DateTime?
+  endDate     DateTime?
+  totalBudget Float?
+  color       String    @default("#6366f1")
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  storyboards    Storyboard[]
+  assets         Asset[]
+  teamMembers    TeamMember[]
+  prompts        PromptTemplate[]
+  timelineEvents TimelineEvent[]
+  tasks          Task[]
+  milestones     Milestone[]
+}
+
+model Storyboard {
+  id             String   @id @default(uuid())
+  order          Int      @default(0)
+  shotNumber     String
+  title          String?
+  description    String?
+  imageUrl       String?
+  cameraAngle    String?
+  cameraMove     String?
+  duration       Int?
+  dialogueScript String?
+  notes          String?
+  status         String   @default("draft")
+  tags           String   @default("[]")
+  projectId      String
+  project        Project  @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  comments StoryboardComment[]
+}
+
+model StoryboardComment {
+  id           String     @id @default(uuid())
+  author       String
+  content      String
+  tags         String     @default("[]")
+  resolved     Boolean    @default(false)
+  storyboardId String
+  storyboard   Storyboard @relation(fields: [storyboardId], references: [id], onDelete: Cascade)
+  createdAt    DateTime   @default(now())
+}
+
+model Asset {
+  id        String   @id @default(uuid())
+  name      String
+  type      String   @default("image")
+  url       String
+  version   Int      @default(1)
+  notes     String?
+  tags      String   @default("[]")
+  projectId String
+  project   Project  @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  versions AssetVersion[]
+}
+
+model AssetVersion {
+  id        String   @id @default(uuid())
+  version   Int
+  url       String
+  notes     String?
+  assetId   String
+  asset     Asset    @relation(fields: [assetId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+}
+
+model TeamMember {
+  id         String   @id @default(uuid())
+  name       String
+  role       String
+  department String
+  email      String?
+  phone      String?
+  notes      String?
+  projectId  String
+  project    Project  @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  createdAt  DateTime @default(now())
+}
+
+model PromptTemplate {
+  id             String   @id @default(uuid())
+  title          String
+  category       String   @default("general")
+  content        String
+  negativePrompt String?
+  tags           String   @default("[]")
+  usageCount     Int      @default(0)
+  projectId      String
+  project        Project  @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+}
+
+model TimelineEvent {
+  id          String   @id @default(uuid())
+  date        DateTime
+  title       String
+  description String?
+  type        String   @default("event")
+  status      String   @default("pending")
+  projectId   String
+  project     Project  @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  createdAt   DateTime @default(now())
+}
+
+model Task {
+  id          String    @id @default(uuid())
+  title       String
+  description String?
+  status      String    @default("todo")
+  priority    String    @default("medium")
+  dueDate     DateTime?
+  order       Int       @default(0)
+  projectId   String
+  project     Project   @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+}
+
+model Milestone {
+  id        String   @id @default(uuid())
+  title     String
+  dueDate   DateTime
+  completed Boolean  @default(false)
+  projectId String
+  project   Project  @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+}

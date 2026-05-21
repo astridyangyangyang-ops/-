@@ -1,0 +1,24 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm install *)",
+      "Bash(npx prisma *)",
+      "Bash(npm run *)",
+      "Bash(echo \"Backend PID: $!\")",
+      "Bash(curl -s http://localhost:3001/api/health)",
+      "Bash(curl -s http://localhost:3001/api/projects)",
+      "Read(//tmp/**)",
+      "Bash(node -e \"const l = require\\('/Users/meow/Downloads/cc/frontend/node_modules/lucide-react/dist/cjs/lucide-react.js'\\); const keys = Object.keys\\(l\\); console.log\\(keys.filter\\(k => /kanban|layout|board|table/i.test\\(k\\)\\).join\\('\\\\n'\\)\\)\")",
+      "Bash(node *)",
+      "Bash(curl *)",
+      "Bash(python3 -m json.tool)",
+      "Bash(python3 -c \"import json,sys; d=json.load\\(sys.stdin\\); print\\(f'提示词创建: {d[\\\\\"title\\\\\"]} \\({d[\\\\\"category\\\\\"]}\\)'\\)\")",
+      "Bash(python3 -c ' *)",
+      "Bash(npx tsc *)",
+      "Bash(python3 -c \"import json,sys; d=json.load\\(sys.stdin\\); print\\(f'批量创建 {len\\(d\\)} 个分镜: {[s[\\\\\"shotNumber\\\\\"] for s in d]}'\\)\")",
+      "Bash(pkill -f \"tsx watch\")",
+      "Bash(git init *)",
+      "Bash(git add *)"
+    ]
+  }
+}
